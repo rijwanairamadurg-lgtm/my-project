@@ -1,0 +1,6 @@
+{
+  "name": "Calculator",
+  "description": "Modern multi-screen calculator with BODMAS mode, Kannada/English labels, Indian Cash Note Counter, Amount to Words, Age Calculator, and Unit Converter.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

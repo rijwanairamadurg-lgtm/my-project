@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidNotebookPage(data, userId) {
+      return data.keys().hasAll(['id', 'title', 'content', 'userId'])
+        && data.id is int
+        && data.title is string
+        && data.title.size() <= 200
+        && data.content is string
+        && data.content.size() <= 200000
+        && data.userId == userId;
+    }
+
+    match /users/{userId}/notebook_pages/{pageId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidNotebookPage(request.resource.data, userId);
+      allow delete: if isOwner(userId);
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "entities": {
+    "NotebookPage": {
+      "title": "NotebookPage",
+      "description": "A notebook page containing notes, title, and last modified timestamp",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Page index identifier"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the note page"
+        },
+        "content": {
+          "type": "string",
+          "description": "Body text written in the notebook page"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the page was updated"
+        },
+        "userId": {
+          "type": "string",
+          "description": "The authenticated Google user ID"
+        }
+      },
+      "required": ["id", "title", "content", "userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/notebook_pages/{pageId}": {
+      "schema": {
+        "$ref": "#/entities/NotebookPage"
+      },
+      "description": "User specific notebook pages backed up to Firestore"
+    }
+  }
+}
